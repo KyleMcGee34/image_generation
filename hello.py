@@ -14,40 +14,32 @@ client_secret = st.text_input('Client Secret','518671b12e6f8c7f624ce5defd88540a9
 headers = {'CF-Access-Client-Id': client_id,
            'CF-Access-Client-Secret': client_secret}
 
-left_column, right_column = st.columns(2)
-with left_column:
-    model = st.selectbox('Select a Model',
-                         ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'])
-    
-with right_column:
-    sampler_index = st.selectbox('Select a Sampler',
-                                 ['Euler a', 'Euler', 'LMS', 'Heun', 'DPM2', 'DPM2 a', 'DPM++ 2S a', 'DPM++ 2M', 'DPM++ SDE', 'DPM fast', 'DPM adaptive', 'LMS Karras', 'DPM2 Karras', 'DPM2 a Karras', 'DPM++ 2S a Karras', 'DPM++ 2M Karras', 'DPM++ SDE Karras', 'DDIM', 'PLMS'])
     
 left_column1, right_column1 = st.columns(2)
 
-with left_column1:
-    prompt = st.text_input('Enter Positive Prompt')
-
-with right_column1:
-    negative_prompt = st.text_input('Enter Negative Prompt')
-
-left_column2, right_column2 = st.columns(2)
-with left_column2:
+with st.sidebar:
+    model = st.selectbox('Select a Model',
+                         ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'])
+    sampler_index1 = st.selectbox('Select a Sampler',
+                                 ['Euler a', 'Euler', 'LMS', 'Heun', 'DPM2', 'DPM2 a', 'DPM++ 2S a', 'DPM++ 2M', 'DPM++ SDE', 'DPM fast', 'DPM adaptive', 'LMS Karras', 'DPM2 Karras', 'DPM2 a Karras', 'DPM++ 2S a Karras', 'DPM++ 2M Karras', 'DPM++ SDE Karras', 'DDIM', 'PLMS'])
     cfg_scale = st.slider('Choose CFG scale',
                           0.0,10.0,7.0,0.1)
-
-# Or even better, call Streamlit functions inside a "with" block:
-with right_column2:
     steps = st.slider("Number of Steps",
                       1,50,20,1)
+    seed = st.text_input('Enter Seed', -1)
+    height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
+    width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
+
+with left_column1:
+    prompt = st.text_area('Enter Positive Prompt')
+
+with right_column1:
+    negative_prompt = st.text_area('Enter Negative Prompt')
 
 option_payload = {
     "sd_model_checkpoint": model
 }
- 
- 
-# x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
-# print(x)
+
 if st.button('Generate Images'):
     x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers, stream=True, timeout=5)
     print(x)
@@ -55,12 +47,12 @@ if st.button('Generate Images'):
     payload = {
     "prompt": prompt,
     "negative_prompt": negative_prompt,
-    "steps": 20,
-    "cfg_scale": 7,
-    "height": 512,
-    "width": 512,
-    "sampler_index": 'Euler a',
-    "seed": 2219603864
+    "steps": steps,
+    "cfg_scale": cfg_scale,
+    "height": height,
+    "width": width,
+    "sampler_index": sampler_index,
+    "seed": seed
 }
 
     response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)

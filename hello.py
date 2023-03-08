@@ -61,5 +61,5 @@ if st.button('Generate Image') and password == st.secrets["password"]:
         image_lst.append(image)
             
     st.image(image)
-else:
+if st.button('Generate Image') and password != st.secrets["password"]:
     '''Password is incorrect'''

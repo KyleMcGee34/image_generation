@@ -38,11 +38,8 @@ option_payload = {
     "sd_model_checkpoint": model
 }
 
-print(option_payload)
-
 if st.button('Generate Image') and password == st.secrets["password"]:
     x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
-    print(x)
     
     payload = {
     "prompt": prompt,
@@ -65,4 +62,4 @@ if st.button('Generate Image') and password == st.secrets["password"]:
             
     st.image(image)
 else:
-    pass
+    '''Password is incorrect'''

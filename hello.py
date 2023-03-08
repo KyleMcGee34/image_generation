@@ -41,7 +41,7 @@ option_payload = {
 print(option_payload)
 
 if st.button('Generate Image') and password == st.secrets["password"]:
-    x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers, stream=True, timeout=5)
+    x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
     print(x)
     
     payload = {

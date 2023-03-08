@@ -38,7 +38,7 @@ option_payload = {
     "sd_model_checkpoint": model
 }
 
-if st.button('Generate Images') and hash(password) == 4799711963707935826:
+if st.button('Generate Images') and password == st.secrets["password"]:
     x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers, stream=True, timeout=5)
     print(x)
     

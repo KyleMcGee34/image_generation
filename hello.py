@@ -53,7 +53,7 @@ if st.button('Generate Images'):
     print(x)
     
     payload = {
-    "prompt": prompt
+    "prompt": prompt,
     "negative_prompt": negative_prompt,
     "steps": 20,
     "cfg_scale": 7,

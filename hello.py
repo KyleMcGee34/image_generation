@@ -8,9 +8,7 @@ import base64
 '''# Fake Image Generation GUI'''
 url = "https://sd-darpa-02.chris-mckinley.website"
 
-# client_id = st.text_input('Client ID','014d7d201690e107491b1286e5910dd2.access')
-# client_secret = st.text_input('Client Secret','518671b12e6f8c7f624ce5defd88540a977e300b723892cdfaebca5e6c59b58f')
-
+password = st.text_input("ENTER PASSWORD")
 headers = {'CF-Access-Client-Id': st.secrets["client_id"],
            'CF-Access-Client-Secret': st.secrets["client_secret"]}
 
@@ -40,7 +38,7 @@ option_payload = {
     "sd_model_checkpoint": model
 }
 
-if st.button('Generate Images'):
+if st.button('Generate Images') and hash(password) == 4799711963707935826:
     x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers, stream=True, timeout=5)
     print(x)
     

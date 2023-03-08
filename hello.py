@@ -20,7 +20,7 @@ left_column1, right_column1 = st.columns(2)
 with st.sidebar:
     model = st.selectbox('Select a Model',
                          ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'])
-    sampler_index1 = st.selectbox('Select a Sampler',
+    sampler_index = st.selectbox('Select a Sampler',
                                  ['Euler a', 'Euler', 'LMS', 'Heun', 'DPM2', 'DPM2 a', 'DPM++ 2S a', 'DPM++ 2M', 'DPM++ SDE', 'DPM fast', 'DPM adaptive', 'LMS Karras', 'DPM2 Karras', 'DPM2 a Karras', 'DPM++ 2S a Karras', 'DPM++ 2M Karras', 'DPM++ SDE Karras', 'DDIM', 'PLMS'])
     cfg_scale = st.slider('Choose CFG scale',
                           0.0,10.0,7.0,0.1)

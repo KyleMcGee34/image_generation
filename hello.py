@@ -5,14 +5,14 @@ import io
 import base64
 
 
-'''# This is a title'''
+'''# Fake Image Generation GUI'''
 url = "https://sd-darpa-02.chris-mckinley.website"
 
-client_id = st.text_input('Client ID','014d7d201690e107491b1286e5910dd2.access')
-client_secret = st.text_input('Client Secret','518671b12e6f8c7f624ce5defd88540a977e300b723892cdfaebca5e6c59b58f')
+# client_id = st.text_input('Client ID','014d7d201690e107491b1286e5910dd2.access')
+# client_secret = st.text_input('Client Secret','518671b12e6f8c7f624ce5defd88540a977e300b723892cdfaebca5e6c59b58f')
 
-headers = {'CF-Access-Client-Id': client_id,
-           'CF-Access-Client-Secret': client_secret}
+headers = {'CF-Access-Client-Id': st.secrets["client_id"],
+           'CF-Access-Client-Secret': st.secrets["client_secret"]}
 
     
 left_column1, right_column1 = st.columns(2)

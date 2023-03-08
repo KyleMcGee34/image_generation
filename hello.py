@@ -38,28 +38,29 @@ option_payload = {
     "sd_model_checkpoint": model
 }
 
-if st.button('Generate Image') and password == st.secrets["password"]:
-    x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
-    
-    payload = {
-    "prompt": prompt,
-    "negative_prompt": negative_prompt,
-    "steps": steps,
-    "cfg_scale": cfg_scale,
-    "height": height,
-    "width": width,
-    "sampler_index": sampler_index,
-    "seed": seed
-}
+if st.button('Generate Image'):
+    if password == st.secrets["password"]:
+        x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
+        
+        payload = {
+        "prompt": prompt,
+        "negative_prompt": negative_prompt,
+        "steps": steps,
+        "cfg_scale": cfg_scale,
+        "height": height,
+        "width": width,
+        "sampler_index": sampler_index,
+        "seed": seed
+    }
 
-    response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
+        response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
 
-    r = response.json()
-    image_lst = [] # stores the images
-    for i in r['images']:
-        image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
-        image_lst.append(image)
-            
-    st.image(image)
-if st.button('Generate Image') and password != st.secrets["password"]:
-    '''Password is incorrect'''
+        r = response.json()
+        image_lst = [] # stores the images
+        for i in r['images']:
+            image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
+            image_lst.append(image)
+                
+        st.image(image)
+    else:
+        '''Password is incorrect'''

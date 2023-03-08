@@ -14,8 +14,6 @@ client_secret = st.text_input('Client Secret','518671b12e6f8c7f624ce5defd88540a9
 headers = {'CF-Access-Client-Id': client_id,
            'CF-Access-Client-Secret': client_secret}
 
-headers
-
 left_column, right_column = st.columns(2)
 with left_column:
     model = st.selectbox('Select a Model',
@@ -24,14 +22,22 @@ with left_column:
 with right_column:
     sampler_index = st.selectbox('Select a Sampler',
                                  ['Euler a', 'Euler', 'LMS', 'Heun', 'DPM2', 'DPM2 a', 'DPM++ 2S a', 'DPM++ 2M', 'DPM++ SDE', 'DPM fast', 'DPM adaptive', 'LMS Karras', 'DPM2 Karras', 'DPM2 a Karras', 'DPM++ 2S a Karras', 'DPM++ 2M Karras', 'DPM++ SDE Karras', 'DDIM', 'PLMS'])
-
+    
 left_column1, right_column1 = st.columns(2)
+
 with left_column1:
+    prompt = st.text_input('Enter Positive Prompt')
+
+with right_column1:
+    negative_prompt = st.text_input('Enter Negative Prompt')
+
+left_column2, right_column2 = st.columns(2)
+with left_column2:
     cfg_scale = st.slider('Choose CFG scale',
                           0.0,10.0,7.0,0.1)
 
 # Or even better, call Streamlit functions inside a "with" block:
-with right_column1:
+with right_column2:
     steps = st.slider("Number of Steps",
                       1,50,20,1)
 
@@ -47,8 +53,8 @@ if st.button('Generate Images'):
     print(x)
     
     payload = {
-    "prompt": 'RAW photo, a close up portrait photo of 40 y.o.  Ukrainian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3',
-    "negative_prompt": '',
+    "prompt": prompt
+    "negative_prompt": negative_prompt,
     "steps": 20,
     "cfg_scale": 7,
     "height": 512,

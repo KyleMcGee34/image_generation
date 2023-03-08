@@ -8,7 +8,7 @@ import base64
 '''# Fake Image Generation GUI'''
 url = "https://sd-darpa-02.chris-mckinley.website"
 
-password = st.text_input("ENTER PASSWORD")
+password = st.text_input("ENTER PASSWORD", type='password')
 headers = {'CF-Access-Client-Id': st.secrets["client_id"],
            'CF-Access-Client-Secret': st.secrets["client_secret"]}
 

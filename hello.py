@@ -73,7 +73,7 @@ if st.button('Generate Image'):
                 f.write(f'{key}: {value}\n')
         st.image(image) # show the image
         
-        col1, col2 = st.columns(2)
+        # col1, col2 = st.columns(2)
         # with col1:
         #     with open(f'image_{now}.png', 'rb') as file:
         #         btn = st.download_button(label='Download Image',
@@ -88,7 +88,8 @@ if st.button('Generate Image'):
         
     else:
         '''Password is incorrect'''
-
+        
+col1, col2 = st.columns(2)
 with col1:
     with open(f'image_{now}.png', 'rb') as file:
         btn = st.download_button(label='Download Image',

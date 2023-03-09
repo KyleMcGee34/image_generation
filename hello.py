@@ -4,6 +4,7 @@ from PIL import Image, PngImagePlugin
 import io
 import base64
 import datetime
+import json
 
 
 '''# Fake Image Generation GUI'''

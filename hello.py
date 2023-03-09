@@ -15,9 +15,6 @@ password = st.text_input("ENTER PASSWORD", type='password')
 headers = {'CF-Access-Client-Id': st.secrets["client_id"],
            'CF-Access-Client-Secret': st.secrets["client_secret"]}
 
-    
-left_column1, right_column1 = st.columns(2)
-
 with st.sidebar:
     model = st.selectbox('Select a Model',
                          ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'])
@@ -31,18 +28,22 @@ with st.sidebar:
     height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
     width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
 
+left_column1, right_column1 = st.columns(2)
+
+# Lets user input a positive prompt
 with left_column1:
     prompt = st.text_area('Enter Positive Prompt')
-
+# Lets user input a negative prompt
 with right_column1:
     negative_prompt = st.text_area('Enter Negative Prompt')
-
+# Used to set the model for image generation
 option_payload = {
     "sd_model_checkpoint": model
 }
 
 image_lst = [] # stores the images
-button_clicked = False
+# Controls the download image and text buttons below
+button_clicked = False 
 
 if st.button('Generate Image'):
     if password == st.secrets["password"]:
@@ -74,27 +75,10 @@ if st.button('Generate Image'):
             dict_ = json.loads(r['info'])
             for key, value in dict_.items():
                 f.write(f'{key}: {value}\n')
-        # st.image(image) # show the image
-        
-        # col1, col2 = st.columns(2)
-        # with col1:
-        #     with open(f'image_{now}.png', 'rb') as file:
-        #         btn = st.download_button(label='Download Image',
-        #                                 data=file,
-        #                                 file_name=f'image_{now}.png',
-        #                                 mime='image/png')
-        # with col2:
-        #     with open(f'text_{now}.txt', 'rb') as textfile:
-        #         btn = st.download_button(label='Download Text File',
-        #                                 data=textfile,
-        #                                 file_name=f'text_{now}.txt')
-        
     else:
         '''Password is incorrect'''
         
 col1, col2 = st.columns(2)
-# with open(f'image_{now}.png', 'rb') as file:
-#     ste.download_button('Download Image', file)
 if button_clicked:
     with col1:
         with open(f'image_{now}.png', 'rb') as file:
@@ -102,15 +86,4 @@ if button_clicked:
     with col2:
         with open(f'text_{now}.txt', 'rb') as textfile:
             ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
-    # with col1:
-    #     with open(f'image_{now}.png', 'rb') as file:
-    #         btn = st.download_button(label='Download Image',
-    #                                 data=file,
-    #                                 file_name=f'image_{now}.png',
-    #                                 mime='image/png')
-    # with col2:
-    #     with open(f'text_{now}.txt', 'rb') as textfile:
-    #         btn = st.download_button(label='Download Text File',
-    #                                 data=textfile,
-    #                                 file_name=f'text_{now}.txt')
     st.image(image) # show the image

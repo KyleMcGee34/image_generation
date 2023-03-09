@@ -138,7 +138,7 @@ with tab2:
                     for key, value in dict_.items():
                         f.write(f'{key}: {value}\n')
 
-                seed += 1
+                seed = seed + 1
         else:
             '''Password is incorrect'''
             

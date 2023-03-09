@@ -163,7 +163,7 @@ with tab2:
                 ste.download_button('Download Image Zip File', zipfile, file_name=f'images.zip')
         with col2:
             with ZipFile(f'text.zip', 'w') as zipObjectText:
-                for textF in os.listdir('text/'):
+                for textF in os.listdir('images/'):
                     if textF.endswith('.txt'):
                         zipObjectText.write(f'text/{textF}')            
             with open(f'text.zip', 'rb') as zipFileText:

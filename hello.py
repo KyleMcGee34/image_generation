@@ -66,11 +66,20 @@ if st.button('Generate Image'):
             image_lst.append(image)
             image_lst[-1] = f'image_{now}.png'
             image.save(f'image_{now}.png','PNG')
+        with open(f'text_{now}.txt', 'w') as f:
+            dict_ = json.loads(r['info'])
+            for key, value in dict_.items():
+                f.write(f'{key}: {value}\n')
         st.image(image)
         with open(f'image_{now}.png', 'rb') as file:
             btn = st.download_button(label='Download Image',
                                      data=file,
                                      file_name=f'image_{now}.png',
                                      mime='image/png')
+        with open(f'text_{now}.txt', 'rb') as textfile:
+            btn = st.download_button(label='Download Text File',
+                                     data=textfile,
+                                     file_name=f'text_{now}.txt')
+        
     else:
         '''Password is incorrect'''

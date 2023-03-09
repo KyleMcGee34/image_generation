@@ -107,6 +107,8 @@ with tab2:
     
     if st.button('Generate Images'):
         if password == st.secrets["password"]:
+            progress_text = "Operation in progress. Please wait."
+            my_bar = st.progress(0, text=progress_text)
             button_clicked_multiple = True
             x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
             
@@ -139,6 +141,7 @@ with tab2:
                         f.write(f'{key}: {value}\n')
 
                 seed = seed + 1
+                my_bar.progress((num+1)/number_of_photos, text=progress_text)
         else:
             '''Password is incorrect'''
             

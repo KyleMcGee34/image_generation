@@ -140,8 +140,8 @@ with tab2:
                 for i in r['images']:
                     image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
                     image_lst_multiple.append(image)
-                    image_lst_multiple[-1] = f'image_{num}_{now}.png'
-                    image.save(f'images/image_{num}_{now}.png','PNG')
+                    image_lst_multiple[-1] = f'{num}_{now}_image.png'
+                    image.save(f'images/{num}_{now}_image.png','PNG')
                 with open(f'text_{num}_{now}.txt', 'w') as f:
                     dict_ = json.loads(r['info'])
                     for key, value in dict_.items():

@@ -93,3 +93,11 @@ with tab1:
         st.image(image) # show the image
 with tab2:
     '''## Create multiple images'''
+    left_column2, right_column2 = st.columns(2)
+
+    # Lets user input a positive prompt
+    with left_column2:
+        prompt = st.text_area('Enter Positive Prompt')
+    # Lets user input a negative prompt
+    with right_column2:
+        negative_prompt = st.text_area('Enter Negative Prompt')

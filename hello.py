@@ -38,6 +38,8 @@ option_payload = {
     "sd_model_checkpoint": model
 }
 
+image_lst = [] # stores the images
+
 if st.button('Generate Image'):
     if password == st.secrets["password"]:
         x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
@@ -56,11 +58,11 @@ if st.button('Generate Image'):
         response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
 
         r = response.json()
-        image_lst = [] # stores the images
         for i in r['images']:
             image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
             image_lst.append(image)
-                
+            image_lst[-1] = f'image_{seed}.png'
+            image.save(f'image_{seed}.png','PNG')
         st.image(image)
     else:
         '''Password is incorrect'''

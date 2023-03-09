@@ -97,7 +97,7 @@ with tab2:
 
     # Lets user input a positive prompt
     with left_column2:
-        prompt1 = st.text_area('Enter Positive Prompt ')
+        prompt1 = st.text_area('Enter Positive Prompt ', value=prompt)
     # Lets user input a negative prompt
     with right_column2:
-        negative_prompt1 = st.text_area('Enter Negative Prompt ')
+        negative_prompt1 = st.text_area('Enter Negative Prompt ', value=negative_prompt)

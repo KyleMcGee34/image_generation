@@ -3,6 +3,7 @@ import requests
 from PIL import Image, PngImagePlugin
 import io
 import base64
+import datetime
 
 
 '''# Fake Image Generation GUI'''
@@ -44,6 +45,8 @@ if st.button('Generate Image'):
     if password == st.secrets["password"]:
         x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
         
+        now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S%f")
+        
         payload = {
         "prompt": prompt,
         "negative_prompt": negative_prompt,
@@ -64,7 +67,7 @@ if st.button('Generate Image'):
             image_lst[-1] = f'image_{seed}.png'
             image.save(f'image_{seed}.png','PNG')
         st.image(image)
-        with open(f'image_{seed}.png', 'rb') as file:
+        with open(f'image_{now}.png', 'rb') as file:
             btn = st.download_button(label='Download Image',
                                      data=file,
                                      file_name=f'image_{seed}.png',

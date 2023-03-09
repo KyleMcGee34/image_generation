@@ -152,7 +152,7 @@ with tab2:
         else:
             '''Password is incorrect'''
             
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
     if button_clicked_multiple:
         with col1:
             with ZipFile(f'images.zip', 'w') as zipObject:
@@ -168,4 +168,10 @@ with tab2:
                         zipObjectText.write(f'images/{textF}')            
             with open(f'text.zip', 'rb') as zipFileText:
                 ste.download_button('Download Text Zip File', zipFileText, file_name=f'text.zip')
+        with col3:
+            with ZipFile('images&text.zip', 'w') as zipObjectBoth:
+                for both in os.listdir('images/'):
+                    zipObjectBoth.write(f'images/{both}')
+            with open(f'images&text.zip', 'rb') as zipFileBoth:
+                ste.download_button('Download Image & Zip File', zipFileBoth, file_name=f'both.zip')        
         # st.image(image) # show the image

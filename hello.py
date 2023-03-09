@@ -73,7 +73,7 @@ if st.button('Generate Image'):
             dict_ = json.loads(r['info'])
             for key, value in dict_.items():
                 f.write(f'{key}: {value}\n')
-        st.image(image) # show the image
+        # st.image(image) # show the image
         
         # col1, col2 = st.columns(2)
         # with col1:
@@ -104,3 +104,4 @@ if button_clicked:
             btn = st.download_button(label='Download Text File',
                                     data=textfile,
                                     file_name=f'text_{now}.txt')
+    st.image(image) # show the image

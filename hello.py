@@ -173,5 +173,5 @@ with tab2:
                 for both in os.listdir('images/'):
                     zipObjectBoth.write(f'images/{both}')
             with open(f'images&text.zip', 'rb') as zipFileBoth:
-                ste.download_button('Download Image & Zip File', zipFileBoth, file_name=f'both.zip')        
+                ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
         # st.image(image) # show the image

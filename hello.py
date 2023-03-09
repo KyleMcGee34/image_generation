@@ -96,7 +96,10 @@ with tab1:
         st.image(image) # show the image
 with tab2:
     image_lst_multiple = []
-    shutil.rmtree('images')
+    try:
+        shutil.rmtree('images')
+    except:
+        pass
     os.makedirs('images')
     '''## Create multiple images'''
     left_column2, right_column2 = st.columns(2)

@@ -97,7 +97,7 @@ col1, col2 = st.columns(2)
 #     ste.download_button('Download Image', file)
 if button_clicked:
     with open(f'image_{now}.png', 'rb') as file:
-        ste.download_button('Download Image', file)
+        ste.download_button('Download Image', file, file_name=f'image_{now}.png')
     # with col1:
     #     with open(f'image_{now}.png', 'rb') as file:
     #         btn = st.download_button(label='Download Image',

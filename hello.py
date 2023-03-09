@@ -27,63 +27,69 @@ with st.sidebar:
     seed = st.text_input('Enter Seed', -1)
     height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
     width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
+    
+tab1, tab2 = st.tabs(["Create One Image", "Create Multiple Images"])
 
-left_column1, right_column1 = st.columns(2)
+with tab1:
+    '''## Create one image'''
+    left_column1, right_column1 = st.columns(2)
 
-# Lets user input a positive prompt
-with left_column1:
-    prompt = st.text_area('Enter Positive Prompt')
-# Lets user input a negative prompt
-with right_column1:
-    negative_prompt = st.text_area('Enter Negative Prompt')
-# Used to set the model for image generation
-option_payload = {
-    "sd_model_checkpoint": model
-}
-
-image_lst = [] # stores the images
-# Controls the download image and text buttons below
-button_clicked = False 
-
-if st.button('Generate Image'):
-    if password == st.secrets["password"]:
-        button_clicked = True
-        x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
-        
-        now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S%f")
-        
-        payload = {
-        "prompt": prompt,
-        "negative_prompt": negative_prompt,
-        "steps": steps,
-        "cfg_scale": cfg_scale,
-        "height": height,
-        "width": width,
-        "sampler_index": sampler_index,
-        "seed": seed
+    # Lets user input a positive prompt
+    with left_column1:
+        prompt = st.text_area('Enter Positive Prompt')
+    # Lets user input a negative prompt
+    with right_column1:
+        negative_prompt = st.text_area('Enter Negative Prompt')
+    # Used to set the model for image generation
+    option_payload = {
+        "sd_model_checkpoint": model
     }
 
-        response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
+    image_lst = [] # stores the images
+    # Controls the download image and text buttons below
+    button_clicked = False 
 
-        r = response.json()
-        for i in r['images']:
-            image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
-            image_lst.append(image)
-            image_lst[-1] = f'image_{now}.png'
-            image.save(f'image_{now}.png','PNG')
-        with open(f'text_{now}.txt', 'w') as f:
-            dict_ = json.loads(r['info'])
-            for key, value in dict_.items():
-                f.write(f'{key}: {value}\n')
-    else:
-        '''Password is incorrect'''
-        
-col1, col2 = st.columns(2)
-if button_clicked:
-    with col1:
-        with open(f'image_{now}.png', 'rb') as file:
-            ste.download_button('Download Image', file, file_name=f'image_{now}.png')
-    with col2:
-        with open(f'text_{now}.txt', 'rb') as textfile:
-            ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
-    st.image(image) # show the image
+    if st.button('Generate Image'):
+        if password == st.secrets["password"]:
+            button_clicked = True
+            x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
+            
+            now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S%f")
+            
+            payload = {
+            "prompt": prompt,
+            "negative_prompt": negative_prompt,
+            "steps": steps,
+            "cfg_scale": cfg_scale,
+            "height": height,
+            "width": width,
+            "sampler_index": sampler_index,
+            "seed": seed
+        }
+
+            response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
+
+            r = response.json()
+            for i in r['images']:
+                image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
+                image_lst.append(image)
+                image_lst[-1] = f'image_{now}.png'
+                image.save(f'image_{now}.png','PNG')
+            with open(f'text_{now}.txt', 'w') as f:
+                dict_ = json.loads(r['info'])
+                for key, value in dict_.items():
+                    f.write(f'{key}: {value}\n')
+        else:
+            '''Password is incorrect'''
+            
+    col1, col2 = st.columns(2)
+    if button_clicked:
+        with col1:
+            with open(f'image_{now}.png', 'rb') as file:
+                ste.download_button('Download Image', file, file_name=f'image_{now}.png')
+        with col2:
+            with open(f'text_{now}.txt', 'rb') as textfile:
+                ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
+        st.image(image) # show the image
+with tab2:
+    '''## Create multiple images'''

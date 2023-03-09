@@ -157,14 +157,14 @@ with tab2:
         with col1:
             with ZipFile(f'images.zip', 'w') as zipObject:
                 for im in os.listdir('images/'):
-                    if im.endswith('png'):
+                    if im.endswith('.png'):
                         zipObject.write(f'images/{im}')
             with open(f'images.zip', 'rb') as zipfile:
                 ste.download_button('Download Image Zip File', zipfile, file_name=f'images.zip')
         with col2:
             with ZipFile(f'text.zip', 'w') as zipObjectText:
                 for textF in os.listdir('text/'):
-                    if textF.endswith('txt'):
+                    if textF.endswith('.txt'):
                         zipObjectText.write(f'text/{textF}')            
             with open(f'text.zip', 'rb') as zipFileText:
                 ste.download_button('Download Text Zip File', zipFileText, file_name=f'text.zip')

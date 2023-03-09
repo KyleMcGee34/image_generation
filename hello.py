@@ -67,7 +67,7 @@ if st.button('Generate Image'):
         with open(f'image_{seed}.png', 'rb') as file:
             btn = st.download_button(label='Download Image',
                                      data=file,
-                                     file_name='image_{seed}.png',
+                                     file_name=f'image_{seed}.png',
                                      mime='image/png')
     else:
         '''Password is incorrect'''

@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_ext as ste
 import requests
 from PIL import Image, PngImagePlugin
 import io
@@ -92,16 +93,20 @@ if st.button('Generate Image'):
         '''Password is incorrect'''
         
 col1, col2 = st.columns(2)
+# with open(f'image_{now}.png', 'rb') as file:
+#     ste.download_button('Download Image', file)
 if button_clicked:
-    with col1:
-        with open(f'image_{now}.png', 'rb') as file:
-            btn = st.download_button(label='Download Image',
-                                    data=file,
-                                    file_name=f'image_{now}.png',
-                                    mime='image/png')
-    with col2:
-        with open(f'text_{now}.txt', 'rb') as textfile:
-            btn = st.download_button(label='Download Text File',
-                                    data=textfile,
-                                    file_name=f'text_{now}.txt')
+    with open(f'image_{now}.png', 'rb') as file:
+        ste.download_button('Download Image', file)
+    # with col1:
+    #     with open(f'image_{now}.png', 'rb') as file:
+    #         btn = st.download_button(label='Download Image',
+    #                                 data=file,
+    #                                 file_name=f'image_{now}.png',
+    #                                 mime='image/png')
+    # with col2:
+    #     with open(f'text_{now}.txt', 'rb') as textfile:
+    #         btn = st.download_button(label='Download Text File',
+    #                                 data=textfile,
+    #                                 file_name=f'text_{now}.txt')
     st.image(image) # show the image

@@ -6,6 +6,7 @@ import io
 import base64
 import datetime
 import json
+from zipfile import ZipFile
 
 
 '''# Fake Image Generation GUI'''
@@ -92,9 +93,10 @@ with tab1:
                 ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
         st.image(image) # show the image
 with tab2:
+    image_lst_multiple = []
     '''## Create multiple images'''
     left_column2, right_column2 = st.columns(2)
-
+    button_clicked_multiple = False
     # Lets user input a positive prompt
     with left_column2:
         prompt1 = st.text_area('Enter Positive Prompt ', value=prompt)
@@ -102,3 +104,53 @@ with tab2:
     with right_column2:
         negative_prompt1 = st.text_area('Enter Negative Prompt ', value=negative_prompt)
     number_of_photos = st.number_input('How Many Photos Would You Like to Generate?', value=5, min_value=2,max_value=50)
+    
+    if st.button('Generate Images'):
+        if password == st.secrets["password"]:
+            button_clicked_multiple = True
+            x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
+            
+            now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S%f")
+            
+            for num in range(number_of_photos):
+                
+                payload = {
+                "prompt": prompt,
+                "negative_prompt": negative_prompt,
+                "steps": steps,
+                "cfg_scale": cfg_scale,
+                "height": height,
+                "width": width,
+                "sampler_index": sampler_index,
+                "seed": seed
+                }
+
+                response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
+
+                r = response.json()
+                for i in r['images']:
+                    image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
+                    image_lst_multiple.append(image)
+                    image_lst_multiple[-1] = f'image_{num}_{now}.png'
+                    image.save(f'image_{num}_{now}.png','PNG')
+                with open(f'text_{num}_{now}.txt', 'w') as f:
+                    dict_ = json.loads(r['info'])
+                    for key, value in dict_.items():
+                        f.write(f'{key}: {value}\n')
+
+                seed += 1
+        else:
+            '''Password is incorrect'''
+            
+    col1, col2 = st.columns(2)
+    if button_clicked_multiple:
+        with col1:
+            with ZipFile(f'images_{now}.zip', 'w') as zipObject:
+                for im in image_lst_multiple:
+                    zipObject.write(im)
+            with open(f'images_{now}.zip', 'rb') as zipfile:
+                ste.download_button('Download Image Zip File', zipfile, file_name=f'images_{now}.zip')
+        # with col2:
+        #     with open(f'text_{now}.txt', 'rb') as textfile:
+        #         ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
+        # st.image(image) # show the image

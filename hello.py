@@ -25,7 +25,7 @@ with st.sidebar:
                           0.0,10.0,7.0,0.1)
     steps = st.slider("Number of Steps",
                       1,50,20,1)
-    seed = st.text_input('Enter Seed', -1)
+    seed = st.number_input('Enter Seed', value=-1, step=1)
     height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
     width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
     

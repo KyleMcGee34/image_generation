@@ -7,6 +7,8 @@ import base64
 import datetime
 import json
 from zipfile import ZipFile
+import os
+import shutil
 
 
 '''# Fake Image Generation GUI'''
@@ -94,6 +96,8 @@ with tab1:
         st.image(image) # show the image
 with tab2:
     image_lst_multiple = []
+    shutil.rmtree('images')
+    os.makedirs('images')
     '''## Create multiple images'''
     left_column2, right_column2 = st.columns(2)
     button_clicked_multiple = False
@@ -134,7 +138,7 @@ with tab2:
                     image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
                     image_lst_multiple.append(image)
                     image_lst_multiple[-1] = f'image_{num}_{now}.png'
-                    image.save(f'image_{num}_{now}.png','PNG')
+                    image.save(f'images/image_{num}_{now}.png','PNG')
                 with open(f'text_{num}_{now}.txt', 'w') as f:
                     dict_ = json.loads(r['info'])
                     for key, value in dict_.items():
@@ -148,12 +152,15 @@ with tab2:
     col1, col2 = st.columns(2)
     if button_clicked_multiple:
         with col1:
-            with ZipFile(f'images_{now}.zip', 'w') as zipObject:
-                for im in image_lst_multiple:
-                    zipObject.write(im)
-            with open(f'images_{now}.zip', 'rb') as zipfile:
-                ste.download_button('Download Image Zip File', zipfile, file_name=f'images_{now}.zip')
+            with ZipFile(f'images.zip', 'w') as zipObject:
+                for im in os.listdir('images/'):
+                    zipObject.write(f'images/{im}')
+            with open(f'images.zip', 'rb') as zipfile:
+                ste.download_button('Download Image Zip File', zipfile, file_name=f'images.zip')
         # with col2:
+        #     with ZipFile(f'text_{now}.zip', 'w') as zipObject:
+        #         for im in image_lst_multiple:
+        #             zipObject.write(im)            
         #     with open(f'text_{now}.txt', 'rb') as textfile:
         #         ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
         # st.image(image) # show the image

@@ -176,5 +176,5 @@ with tab2:
                 ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
         for img in os.listdir('images/'):
             if img.endswith('.png'):
-                st.image(f'image/{img}')
+                st.image(f'images/{img}')
         # st.image(image) # show the image

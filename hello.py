@@ -174,7 +174,29 @@ with tab2:
                     zipObjectBoth.write(f'images/{both}')
             with open(f'images&text.zip', 'rb') as zipFileBoth:
                 ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
-        for img in os.listdir('images/'):
-            if img.endswith('.png'):
-                st.image(f'images/{img}')
+                
+        col12,col22 = st.columns(2)
+
+        if 'counter' not in st.session_state: 
+            st.session_state.counter = 0
+
+        def showPhoto(photo):
+            col22.image(photo,caption=photo)
+            col12.write(f"Index as a session_state attribute: {st.session_state.counter}")
+            
+            ## Increments the counter to get next photo
+            st.session_state.counter += 1
+            if st.session_state.counter >= len(pathsImages):
+                st.session_state.counter = 0
+
+        # Get list of images in folder
+        folderWithImages = 'images/'
+        pathsImages = [os.path.join(folderWithImages,f) for f in os.listdir(folderWithImages)]
+
+        col12.subheader("List of images in folder")
+        col12.write(pathsImages)
+
+        # Select photo a send it to button
+        photo = pathsImages[st.session_state.counter]
+        show_btn = col12.button("Show next pic ⏭️",on_click=showPhoto,args=([photo]))
         # st.image(image) # show the image

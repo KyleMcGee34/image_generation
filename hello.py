@@ -41,9 +41,11 @@ option_payload = {
 }
 
 image_lst = [] # stores the images
+button_clicked = False
 
 if st.button('Generate Image'):
     if password == st.secrets["password"]:
+        button_clicked = True
         x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
         
         now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S%f")
@@ -90,14 +92,15 @@ if st.button('Generate Image'):
         '''Password is incorrect'''
         
 col1, col2 = st.columns(2)
-with col1:
-    with open(f'image_{now}.png', 'rb') as file:
-        btn = st.download_button(label='Download Image',
-                                data=file,
-                                file_name=f'image_{now}.png',
-                                mime='image/png')
-with col2:
-    with open(f'text_{now}.txt', 'rb') as textfile:
-        btn = st.download_button(label='Download Text File',
-                                data=textfile,
-                                file_name=f'text_{now}.txt')
+if button_clicked:
+    with col1:
+        with open(f'image_{now}.png', 'rb') as file:
+            btn = st.download_button(label='Download Image',
+                                    data=file,
+                                    file_name=f'image_{now}.png',
+                                    mime='image/png')
+    with col2:
+        with open(f'text_{now}.txt', 'rb') as textfile:
+            btn = st.download_button(label='Download Text File',
+                                    data=textfile,
+                                    file_name=f'text_{now}.txt')

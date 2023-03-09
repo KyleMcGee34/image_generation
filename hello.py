@@ -64,13 +64,13 @@ if st.button('Generate Image'):
         for i in r['images']:
             image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
             image_lst.append(image)
-            image_lst[-1] = f'image_{seed}.png'
-            image.save(f'image_{seed}.png','PNG')
+            image_lst[-1] = f'image_{now}.png'
+            image.save(f'image_{now}.png','PNG')
         st.image(image)
         with open(f'image_{now}.png', 'rb') as file:
             btn = st.download_button(label='Download Image',
                                      data=file,
-                                     file_name=f'image_{seed}.png',
+                                     file_name=f'image_{now}.png',
                                      mime='image/png')
     else:
         '''Password is incorrect'''

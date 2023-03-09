@@ -124,8 +124,8 @@ with tab2:
             for num in range(number_of_photos):
                 
                 payload = {
-                "prompt": prompt,
-                "negative_prompt": negative_prompt,
+                "prompt": prompt1,
+                "negative_prompt": negative_prompt1,
                 "steps": steps,
                 "cfg_scale": cfg_scale,
                 "height": height,

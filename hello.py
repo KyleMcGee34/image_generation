@@ -101,3 +101,4 @@ with tab2:
     # Lets user input a negative prompt
     with right_column2:
         negative_prompt1 = st.text_area('Enter Negative Prompt ', value=negative_prompt)
+    number_of_photos = st.number_input('How Many Photos Would You Like to Generate?', value=5, min_value=2,max_value=50)

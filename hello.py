@@ -165,7 +165,7 @@ with tab2:
             with ZipFile(f'text.zip', 'w') as zipObjectText:
                 for textF in os.listdir('images/'):
                     if textF.endswith('.txt'):
-                        zipObjectText.write(f'text/{textF}')            
+                        zipObjectText.write(f'images/{textF}')            
             with open(f'text.zip', 'rb') as zipFileText:
                 ste.download_button('Download Text Zip File', zipFileText, file_name=f'text.zip')
         # st.image(image) # show the image

@@ -100,7 +100,12 @@ with tab2:
         shutil.rmtree('images')
     except:
         pass
+    try:
+        shutil.rmtree('text')
+    except:
+        pass
     os.makedirs('images')
+    os.makedirs('text')
     '''## Create multiple images'''
     left_column2, right_column2 = st.columns(2)
     button_clicked_multiple = False
@@ -142,7 +147,7 @@ with tab2:
                     image_lst_multiple.append(image)
                     image_lst_multiple[-1] = f'{num}_{now}_image.png'
                     image.save(f'images/{num}_{now}_image.png','PNG')
-                with open(f'text_{num}_{now}.txt', 'w') as f:
+                with open(f'text/{num}_{now}_text.txt', 'w') as f:
                     dict_ = json.loads(r['info'])
                     for key, value in dict_.items():
                         f.write(f'{key}: {value}\n')
@@ -160,10 +165,10 @@ with tab2:
                     zipObject.write(f'images/{im}')
             with open(f'images.zip', 'rb') as zipfile:
                 ste.download_button('Download Image Zip File', zipfile, file_name=f'images.zip')
-        # with col2:
-        #     with ZipFile(f'text_{now}.zip', 'w') as zipObject:
-        #         for im in image_lst_multiple:
-        #             zipObject.write(im)            
-        #     with open(f'text_{now}.txt', 'rb') as textfile:
-        #         ste.download_button('Download Text File', textfile, file_name=f'text_{now}.txt')
+        with col2:
+            with ZipFile(f'text.zip', 'w') as zipObjectText:
+                for textF in os.listdir('text/'):
+                    zipObjectText.write(f'text/{textF}')            
+            with open(f'text.zip', 'rb') as zipFileText:
+                ste.download_button('Download Text Zip File', zipFileText, file_name=f'text.zip')
         # st.image(image) # show the image

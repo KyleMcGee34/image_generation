@@ -21,13 +21,15 @@ headers = {'CF-Access-Client-Id': st.secrets["client_id"],
 with st.sidebar:
     model = st.selectbox('Select a Model',
                          ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'],
-                         help='This is a test')
+                         help='The selected model will be used to create the images.')
     sampler_index = st.selectbox('Select a Sampler',
                                  ['Euler a', 'Euler', 'LMS', 'Heun', 'DPM2', 'DPM2 a', 'DPM++ 2S a', 'DPM++ 2M', 'DPM++ SDE', 'DPM fast', 'DPM adaptive', 'LMS Karras', 'DPM2 Karras', 'DPM2 a Karras', 'DPM++ 2S a Karras', 'DPM++ 2M Karras', 'DPM++ SDE Karras', 'DDIM', 'PLMS'])
     cfg_scale = st.slider('Choose CFG scale',
-                          0.0,10.0,7.0,0.1)
+                          0.0,30.0,7.0,0.1,
+                          help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
     steps = st.slider("Number of Steps",
-                      1,50,20,1)
+                      1,150,20,1,
+                      help='Generally, more steps result in a higher-quality image but will take longer to create.')
     seed = st.number_input('Enter Seed', value=-1, step=1)
     height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
     width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)

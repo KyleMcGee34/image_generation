@@ -180,7 +180,7 @@ with tab2:
                     zipObjectBoth.write(f'images/{both}')
             with open(f'images&text.zip', 'rb') as zipFileBoth:
                 ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
-        if ste.download_button('Click Me'):
+        if st.button('Click Me'):
             try:
                 '''image printed'''
             except:

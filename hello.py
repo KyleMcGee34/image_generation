@@ -30,7 +30,8 @@ with st.sidebar:
     steps = st.slider("Number of Steps",
                       1,150,20,1,
                       help='Generally, more steps result in a higher-quality image but will take longer to create.')
-    seed = st.number_input('Enter Seed', value=-1, step=1)
+    seed = st.number_input('Enter Seed', value=-1, step=1,
+                           help='Number used to initalize the image generation. Using the same seed with the same parameters will generate the same image.\nWhen creating multiple images, the seed will be incremented by one to result in different images.')
     height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
     width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
     

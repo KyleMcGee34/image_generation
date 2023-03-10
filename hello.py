@@ -193,7 +193,7 @@ with tab2:
             
             path = 'images/'
             for x in os.listdir(path):
-   
+                print(x)
                 f = drive.CreateFile({'parents':[{'id': st.secrets["google_folder_id"]}],'title': x})
                 drive.CreateFile()
                 f.SetContentFile(os.path.join(path, x))

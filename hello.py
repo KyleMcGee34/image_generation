@@ -181,8 +181,23 @@ with tab2:
             with open(f'images&text.zip', 'rb') as zipFileBoth:
                 ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
         if st.button('Click Me'):
-            try:
-                '''image printed'''
-            except:
-                pass
+            gauth = GoogleAuth()
+            gauth.client_config['client_id'] = st.secrets["google_client_id"]
+            gauth.client_config['client_secret'] = st.secrets["google_client_secret"]
+            gauth.client_config['auth_uri'] = st.secrets["google_auth_uri"]
+            gauth.client_config['token_uri'] = st.secrets["google_token_uri"]
+            gauth.client_config['project_id'] = st.secrets["google_project_id"]
+            gauth.client_config['revoke_uri'] = None
+            gauth.client_config['redirect_uri'] = st.secrets["google_redirect_uri"]
+            drive = GoogleDrive(gauth)
+            
+            path = '/images'
+            for x in os.listdir(path):
+   
+                f = drive.CreateFile({'parents':[{'id': st.secrets["google_folder_id"]}],'title': x})
+                drive.CreateFile()
+                f.SetContentFile(os.path.join(path, x))
+                f.Upload()
+
+                f = None
         # st.image(image) # show the image

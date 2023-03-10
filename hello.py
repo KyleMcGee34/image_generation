@@ -9,6 +9,8 @@ import json
 from zipfile import ZipFile
 import os
 import shutil
+from pydrive.drive import GoogleDrive
+from pydrive.auth import GoogleAuth
 
 
 '''# Fake Image Generation GUI'''
@@ -178,4 +180,9 @@ with tab2:
                     zipObjectBoth.write(f'images/{both}')
             with open(f'images&text.zip', 'rb') as zipFileBoth:
                 ste.download_button('Download Image & Text Zip File', zipFileBoth, file_name=f'both.zip')        
+        if ste.download_button('Click Me'):
+            try:
+                '''image printed'''
+            except:
+                pass
         # st.image(image) # show the image

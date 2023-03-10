@@ -191,7 +191,7 @@ with tab2:
             gauth.client_config['redirect_uri'] = st.secrets["google_redirect_uri"]
             drive = GoogleDrive(gauth)
             
-            path = '/images'
+            path = 'images/'
             for x in os.listdir(path):
    
                 f = drive.CreateFile({'parents':[{'id': st.secrets["google_folder_id"]}],'title': x})

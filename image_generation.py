@@ -11,6 +11,8 @@ import os
 import shutil
 
 '''# Fake Image Generation GUI'''
+st.set_page_config(page_title="Image Generation")
+
 url = "https://sd-darpa-02.chris-mckinley.website"
 
 password = st.text_input("ENTER PASSWORD", type='password')
